@@ -1,6 +1,4 @@
-# -----------------------------
-# Import necessary libraries
-# -----------------------------
+
 import streamlit as st  # Streamlit for building the web app
 from langchain_groq import ChatGroq  # Groq-based Chat LLM
 from langchain_community.utilities import ArxivAPIWrapper, WikipediaAPIWrapper  # Utilities to query Arxiv and Wikipedia
@@ -10,9 +8,7 @@ from langchain.callbacks import StreamlitCallbackHandler  # Callback handler to 
 import os
 from dotenv import load_dotenv  # For environment variables (if needed)
 
-# -----------------------------
-# Initialize Arxiv and Wikipedia Tools
-# -----------------------------
+
 
 # Create an Arxiv wrapper with settings for how many results to return
 # and how many characters to retrieve from each article
@@ -27,20 +23,17 @@ wiki = WikipediaQueryRun(api_wrapper=api_wrapper)
 # Create a DuckDuckGo tool for general web search
 search = DuckDuckGoSearchRun(name="Search")
 
-# -----------------------------
-# Streamlit UI Setup
-# -----------------------------
+
+
 st.title("🔎 Search Engine with Langchain Tools and Agents")  # Title of the Streamlit app
 
-# -----------------------------
-# Sidebar for settings
-# -----------------------------
+
+
 st.sidebar.title("Settings")  # Sidebar title
 api_key = st.sidebar.text_input("Please Enter your Groq API Key:", type="password")  # Input for Groq API key
 
-# -----------------------------
-# Session State for Chat Messages
-# -----------------------------
+
+
 # If there's no "messages" key in st.session_state, initialize it
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
@@ -54,9 +47,8 @@ if "messages" not in st.session_state:
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg['content'])
 
-# -----------------------------
-# Chat Input and Processing
-# -----------------------------
+
+
 # Read user input from the chat input box
 if prompt := st.chat_input(placeholder="What is Machine learning?"):
     # Store user's message in session state
@@ -85,9 +77,9 @@ if prompt := st.chat_input(placeholder="What is Machine learning?"):
         handling_parsing_error=True
     )
 
-    # -----------------------------
+    
     # Get and Display the Response
-    # -----------------------------
+   
     with st.chat_message("assistant"):
         # Create a Streamlit callback handler so we can display the thought process
         # The 'expand_new_thoughts' parameter controls how the chain of thought is expanded
